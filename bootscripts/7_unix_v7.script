@@ -1,0 +1,23 @@
+detach all
+reset all
+
+set cpu 11/70 1M
+set cpu idle
+set rp0 rp06
+att rp0 disk0.hp
+;att tm0 dist.tap
+;b tm0
+
+
+set realcons host=localhost
+set realcons panel=11/70
+set realcons interval=1
+set realcons connect
+
+
+echo first, enter: boot
+echo then: hp(0,0)unix
+
+b rp0
+
+

@@ -1,0 +1,196 @@
+detach all
+reset all
+;
+;	*********************************************************
+;	*                                                       *
+;	*  BLINKY the PDP-11 Front Panel LED Pattern Generator  *
+;	*                                                       *
+;	*  Mike Hill                               09-Jul-2017  *
+;	*  Version 2                               25-Jul-2017  *
+;	*  Version 3                               27-Jul-2017  *
+;	*                                                       *
+;	*********************************************************
+;	*                                                       *
+;	*            Copyright (c) 2017 by Mike Hill            *
+;	*                                                       *
+;	*                  All Rights Reserved                  *
+;	*                                                       *
+;	*********************************************************
+;
+
+;
+; If you have a PDP-11 with lots of lights and switches then this is for you.
+; Just load at (and start from) address zero in memory.
+;
+; Minimum requirements are a switch register and at least 40KB RAM.
+;
+
+;
+; Although designed to run on the PDP-11/70 this program attempts to do its
+; best on all PDP-11 systems which have a switch register.  If there is no
+; front panel, then there isn't much point - but at least it will run.
+;
+; On all other PDP-11 systems, BLINKY will "gracefully" die.  In most cases
+; it will HALT when accessing the DISPLAY REGISTER (e.g. PDP-11/24).
+; If your PDP-11 does not have a line-time clock then there's nothing we can do.
+;
+; If your PDP-11 does not have supervisor mode, BLINKY will ignore the MMU.
+;
+
+;
+; Use three blocks of three switches to control the speed of each section:
+;
+;	Switches 14-12 control the MMU  LEDs (top    row on a PDP-11/70)
+;	Switches  8-6  control the ADDR LEDs (middle row on a PDP-11/70)
+;	Switches  2-0  control the DATA LEDs (bottom row on a PDP-11/70)
+;
+; The speed switch blocks (ought to) be coloured the same to make it easy.
+; Values change the rotation speed from slow (0) to fast (7).
+; Setting a block of switches to 0 moves the respective LEDs once per second.
+; Setting them to 7 is probably too quick to follow.  Choose something between.
+;
+
+;
+; The ADDR LEDs are rotated when viewing the PROG PHY address.
+; The DATA LEDs are rotated when viewing the DATA PATHS.
+; The number of elapsed seconds is shown when viewing the DISPLAY REGISTER.
+;
+
+;
+; An additional feature is console loopback.  All characters typed on the
+; system console terminal will be echoed.  This is a best-effort approach and
+; no buffering of characters or error detection is attempted.
+;
+
+;
+; On a PDP-11/70, patterns will be shown in the following LED blocks:
+;
+;	Top    row: USER-KERNEL and 16-22
+;	Middle row: Address bits 15-1
+;	Bottom row: Data    bits 15-0
+;
+; Other LEDs may light according to their function.
+;
+
+;
+; BLINKY should work on the following PDP-11 systems with a switch register:
+;
+;	PDP-11/04	(no front panel and potentially no SWR)
+;	PDP-11/05
+;	PDP-11/10	(similar to the PDP-11/05)
+;	PDP-11/15	(similar to the PDP-11/20)
+;	PDP-11/20
+;	PDP-11/34
+;	PDP-11/40
+;	PDP-11/44	(no front panel and SWR is read-only)
+;	PDP-11/45
+;	PDP-11/55	(similar to the PDP-11/45)
+;	PDP-11/60
+;	PDP-11/70
+;
+; All others should HALT when started.  R0 will contain the PC of the failure.
+;
+
+;
+; Usage (examples are for the PDP-11/70):
+;
+;	a) Boot the program from any medium (paper tape, disk, mag tape, etc.)
+;	b) Set the ADDRESS SELECT knob to PROG PHY
+;	c) Set the DATA SELECT knob to DATA PATHS
+;	d) Play with switches 14-12, 8-6, and 2-0 (all others are ignored)
+;	e) Rotate the DATA SELECT knob between DISPLAY REGISTER and DATA PATHS
+;	f) Type characters on the console and observe they are echoed
+;
+
+;
+; Using BLINKY_LIST:
+;
+set cpu 11/70
+set clk 50hz
+
+set realcons host=localhost
+set realcons panel=11/70
+set realcons interval=1
+set realcons connect
+
+load ../bootscripts/20/blinky1170.ptp
+;
+;	-or-
+;
+;	sim> set cpu 11/70
+;	sim> attach -r rk0 ../bootscripts/20/BLINKY.dsk
+;	sim> boot rk0
+;	^E
+;	sim> do BLINKY_LIST
+;	sim> run 000000
+;
+
+;
+; This only supports V3 (L#)
+;
+if not 000776=031526 goto wrongversion
+if not 000774=021514 goto wronglevel
+;
+; Listing
+;
+echo ;   -- Vectors
+e -m 000000-000003
+e    000004-000017
+e -m 000020-000027
+echo ;   -- Initialize
+e -m 000030-000035
+echo ;   -- (c) 2017 Mike Hill
+; -a 000036-000057
+echo ;   -- Console vectors
+e    000060-000067
+echo ;   -- Keyboard interrupt
+e -m 000070-000077
+echo ;   -- Clock vector
+e    000100-000103
+echo ;   -- MMU LED patterns
+e -b 000104-000115
+e    000116-000121
+echo ;   -- ADDR LED patterns
+e    000122-000163
+echo ;   -- DATA LED patterns
+e    000164-000225
+echo ;   -- Setup MMU
+e -m 000226-000323
+echo ;   -- Ready to roll
+e -m 000324-000401
+echo ;   -- Clock interrupt
+e -m 000402-000427
+echo ;   -- Initialize cont.
+e -m 000430-000453
+echo ;   -- Load WAITs
+e -m 000454-000475
+echo ;   -- MMU handler
+e -m 000476-000615
+echo ;   -- ADDR handler
+e -m 000616-000661
+echo ;   -- DATA handler
+e -m 000662-000721
+echo ;   -- Elapsed timer
+e -m 000722-000741
+echo ;   -- Unused 000742-747
+;    000742-000747
+echo ;   -- Keyboard CSR
+e    000750-000751
+echo ;   -- Dummy DR and SR
+e    000752-000761
+echo ;   -- Reserved 000762-763
+; -b 000762-000763
+echo ;   -- Delay table
+e -b 000764-000773
+;
+:wronglevel
+:wrongversion
+;
+echo ;   -- Version
+e -c 000774-000777
+;
+
+go 0
+
+; END-OF-FILE
+

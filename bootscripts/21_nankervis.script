@@ -1,0 +1,53 @@
+detach all
+reset all
+;set cpu 11/70 1912K nofpp  ;1912K is not actually SIMH legal - use 2M instead
+set cpu 11/70 2M nofpp
+  set clk 50hz
+  attach rk0 ../bootscripts/21/rk0.dsk	
+  ;RK05 image of Unix V5
+  attach rk1 ../bootscripts/21/rk1.dsk	
+  ;RK05 image of RT11 v4.0
+  attach rk2 ../bootscripts/21/rk2.dsk	
+  ;RK05 image of RSTS V06C-03
+  attach rk3 ../bootscripts/21/rk3.dsk	
+  ;RK05 image of XXDP
+  attach rk4 ../bootscripts/21/rk4.dsk	
+  ;RK05 image of RT-11 3B
+  attach rk5 ../bootscripts/21/rk5.dsk	
+  ;RK05 image of RT-11 V5.4F
+  set rl0 RL02
+  attach rl0 ../bootscripts/21/rl0.dsk	
+  ;RL02 image of BSD 2.9
+  set rl1 RL02
+  attach rl1 ../bootscripts/21/rl1.dsk	
+  ;RL02 image of RSX 11M v3.2
+  set rl2 RL01
+  attach rl2 ../bootscripts/21/rl2.dsk	
+  ;RL01 image of RSTS/E v7.0
+  set rl3 RL02
+  attach rl3 ../bootscripts/21/rl3.dsk	
+  ;RL02 image of XXDP+
+  set rp0 RP06
+  attach rp0 ../bootscripts/21/rp0.dsk	
+  ;RP06 image of ULTRIX-11 V3.1
+  set rp1 RP06
+  attach rp1 ../bootscripts/21/rp1.dsk	
+  ;RP06 image of BSD 2.11
+  set rp2 RP04
+  attach rp2 ../bootscripts/21/rp2.dsk	
+  ;RP04 image of RSTS/E v9.6
+  set rp3 RP04
+  attach rp3 ../bootscripts/21/rp3.dsk	
+  ;RP04 image of RSX 11M v4.6
+  attach tm0 ../bootscripts/21/tm0.tap	
+  ;Backup of RSTS 4B-17
+  attach tm1 ../bootscripts/21/tm1.tap	
+  ;Distribution for RSTS V06C-03
+  attach tm2 ../bootscripts/21/tm2.tap	
+  ;Distribution for RSTS V7.0
+
+set realcons host=localhost
+set realcons panel=11/70
+; We're running on a desktop PC with connection to localhost: max speed;
+set realcons interval=1
+set realcons connected
