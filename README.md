@@ -1,8 +1,14 @@
 # PiDP-11 software, alpha version
 See obsolescence.wix.com/obsolescence/pidp11
 
+**Important: I'm struggling with github's handling of large (largish) binary images.
+So, do everything as per below. Then, download the contents of the bootscripts directory from this Google Drive file:
+https://drive.google.com/open?id=1SuBurN3uk6VqRGAmvjwREUWHuFMQLZPM
+(Apologies)**
+
+
 **Note**
-- that this is a very early version for beta testers (well, alpha as far as the software is concerned).
+- that this is a very early version of the software for beta testers of the kit
 - that you do not need to PiDP-11 hardware, it'll run fine without. Just no lights and switches.
 
 
