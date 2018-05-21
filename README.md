@@ -9,12 +9,12 @@ https://drive.google.com/open?id=1SuBurN3uk6VqRGAmvjwREUWHuFMQLZPM
 
 **Note**
 - that this is a very early version of the software for beta testers of the kit
-- that you do not need to PiDP-11 hardware, it'll run fine without. Just no lights and switches.
+- that you do not need to have the PiDP-11 hardware, it'll run fine without. Just no lights and switches.
 
 
 **Install instructions:**
-- make sure your Pi is connected to the internet during install, pull the PiDP-11 repository,
-- create a 'pidp11' directory into /opt, and copy the files inside the PiDP-11 clone directory into /opt/pidp11/,
+- make sure your Pi is connected to the internet during install, pull the pidp11 repository,
+- create a 'pidp11' directory into /opt, and copy the files inside the pidp11 clone directory into /opt/pidp11/,
 - run sudo ./install.sh in /opt/pidp11/install/,
 - reboot
 
@@ -48,11 +48,13 @@ The idea is that this gradually fills up with fully loaded operating systems, of
 
 SR switch/OS | SR switch/OS | SR switch/OS | SR switch/OS |  SR switch/OS |
 ----------|-----------|-----------|-----------|------------|
-1 - RSX-11M + | 6 - Unix v6 | 11 - | 16 - | 21 - Bare bones 11 |
-2 - BSD211 | 7 - | 12 - | 17 - 
-3 - RT11 | 8 - | 13 - | 18 - 
+1 - RSX-11M + | 6 - Unix v6 | 11 - | 16 - | 21 - Nankervis |
+2 - BSD211 | 7 - | 12 - | 17 - |      Collection of
+3 - RT11 | 8 - | 13 - | 18 - |      15 OSes
 4 - RSTS v7 | 9 - | 14 - | 19 -
 5 - | 10 -| 15 - | 20 - Hill's Blinky
+
+Also see http://obsolescence.wixsite.com/obsolescence/pidp-11-how-to-use for the current state of the System Collection.
 
 
 **Changing boot scripts & adding your own:**
@@ -73,10 +75,11 @@ First make sure you've got a working internet connection (googling will help you
 * cd ~
 * git clone git://github.com/PiDP/PiDP-11.git    // not git clone https://github.com/PiDP/PiDP11
 * sudo mkdir /opt/pidp11
-* cd ~/PiDP-11
-* sudo cp -r * /opt/pidp11/
+* cd ~/pidp11                                    // note - this is the downloaded copy in your home directory...
+* sudo cp -r * /opt/pidp11/                      // copy to the /opt/pidp11 directory
 * cd /opt/pidp11/install
 * sudo ./install.sh
+* <See comments at the top of this page. Download the bootscript/disk image collection and place it all in /opt/pidp11/bootscripts>
 * sudo reboot
 
 
