@@ -115,6 +115,10 @@ extern DEVICE dup_dev;
 extern DEVICE dpv_dev;
 extern DEVICE kmc_dev;
 extern DEVICE uca_dev, ucb_dev;
+extern DEVICE kwxx_dev;
+extern DEVICE wwvbi_dev;
+extern DEVICE wwvbo_dev;
+extern DEVICE umc_dev;
 extern REG cpu_reg[];
 extern int32 saved_PC;
 
@@ -188,6 +192,10 @@ DEVICE *sim_devices[] = {
     &dpv_dev,
     &kmc_dev,
     &ke_dev,
+    &kwxx_dev,
+    &wwvbi_dev,
+    &wwvbo_dev,
+    &umc_dev,
 #else
     &clk_dev,
     &tti_dev,

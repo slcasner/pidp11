@@ -603,6 +603,14 @@ AUTO_CON auto_tab[] = {/*c  #v  am vm  fxa   fxv */
         {017546}, {0100} },                             /* KW11L - fx CSR, fx VEC */
     { { "PCLK" },        1,  1,  0, 0, 
         {012540}, {0104} },                             /* KW11P - fx CSR, fx VEC */
+    { { "KWXX" },        1,  1,  0, 0, 
+        {004020}, {0110} },                             /* KW11-XX - fx CSR, fx VEC */
+    { { "WWVBI" },       1,  1,  0, 0, 
+        {015620}, {0360} },                             /* WWVB to DL11 rcv - fx CSR, fx VEC */
+    { { "WWVBO" },       1,  1,  0, 0, 
+        {015624}, {0364} },                             /* WWVB to DL11 xmt - fx CSR, fx VEC */
+    { { "UMC" },         1,  0,  0, 0, 
+        {016100} },                                     /* UMC-Z80 dummy device - fx CSR, no VEC */
     { { "PTR" },         1,  1,  0, 0, 
         {017550}, {0070} },                             /* PC11 reader - fx CSR, fx VEC */
     { { "PTP" },         1,  1,  0, 0, 

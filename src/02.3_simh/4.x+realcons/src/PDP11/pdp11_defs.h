@@ -602,6 +602,7 @@ typedef struct pdp_dib DIB;
 #define INT_V_DTA       3
 #define INT_V_TA        4
 #define INT_V_CR        5                               /* CR11 */
+#define INT_V_KWXX      6
 
 #define INT_V_PIR5      0                               /* BR5 */
 #define INT_V_RK        1
@@ -629,6 +630,8 @@ typedef struct pdp_dib DIB;
 #define INT_V_KMCA      23
 #define INT_V_KMCB      24
 #define INT_V_UCB       25
+#define INT_V_WWVBI     26
+#define INT_V_WWVBO     27
 
 #define INT_V_PIR4      0                               /* BR4 */
 #define INT_V_TTI       1
@@ -714,6 +717,9 @@ typedef struct pdp_dib DIB;
 #define INT_PIR1        (1u << INT_V_PIR1)
 #define INT_TDRX        (1u << INT_V_TDRX)
 #define INT_TDTX        (1u << INT_V_TDTX)
+#define INT_KWXX        (1u << INT_V_KWXX)
+#define INT_WWVBI       (1u << INT_V_WWVBI)
+#define INT_WWVBO       (1u << INT_V_WWVBO)
 
 #define INT_INTERNAL7   (INT_PIR7)
 #define INT_INTERNAL6   (INT_PIR6 | INT_CLK)
@@ -726,6 +732,7 @@ typedef struct pdp_dib DIB;
 #define IPL_UCB         7                               /* int pri levels */
 #define IPL_CLK         6
 #define IPL_PCLK        6
+#define IPL_KWXX        6
 #define IPL_DTA         6
 #define IPL_TA          6
 #define IPL_CR          6
@@ -773,6 +780,8 @@ typedef struct pdp_dib DIB;
 #define IPL_LK          4           /* XXX just a guess */
 #define IPL_TDRX        4
 #define IPL_TDTX        4
+#define IPL_WWVBI       4
+#define IPL_WWVBO       4
 
 #define IPL_PIR7        7
 #define IPL_PIR6        6
