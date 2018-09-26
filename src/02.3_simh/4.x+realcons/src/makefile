@@ -92,14 +92,14 @@ ifneq (,$(filter $(MAKE_TARGET_ARCH),X86 X64))
     endif
   endif
   ifeq ($(MAKE_TARGET_ARCH),X86)
-  	BIN=$(SRC)/../bin-ubuntu-x86/
-  	OS_CCDEFS += -m32
+	BIN=$(SRC)/../bin-ubuntu-x86/
+	OS_CCDEFS += -m32
   else
-  	BIN=$(SRC)/../bin-ubuntu-x64/
-  	OS_CCDEFS += -m64
+	BIN=$(SRC)/../bin-ubuntu-x64/
+	OS_CCDEFS += -m64
   endif
   CC = gcc -std=c99 -U__STRICT_ANSI__  $(CC_DEFS) $(OS_CCDEFS)\
-  	-I $(SRC) $(CC_DBG_FLAGS) -UUSE_REALCONS
+	-I $(SRC) $(CC_DBG_FLAGS) -UUSE_REALCONS
 
   ifeq ($(USE_NETWORK),)
   else
@@ -141,7 +141,7 @@ ifeq ($(MAKE_TARGET_ARCH),RPI)
   OS_CCDEFS = -D_GNU_SOURCE
   LDFLAGS = -lrt -lm  -lpthread -ldl
   CC = arm-linux-gnueabihf-gcc -std=c99 -U__STRICT_ANSI__  $(CC_DEFS) $(OS_CCDEFS) \
-  	-I $(SRC) $(CC_DBG_FLAGS) -UUSE_REALCONS
+	-I $(SRC) $(CC_DBG_FLAGS) -UUSE_REALCONS
   LIBPCAP=$(SRC)/../rpi-build/libpcap.a
   NETWORK_OPT = -DUSE_NETWORK -isystem $(SYSROOTS)/usr/local/include $(LIBPCAP)
   # NETWORK_OPT = -DUSE_NETWORK -isystem $(SYSROOTS)/usr/local/include -lpcap
