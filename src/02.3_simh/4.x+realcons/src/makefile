@@ -36,6 +36,7 @@ REALCONS= \
 REALCONS_PDP11= \
 	    $(REALCONS_DIR)realcons_console_pdp11_20.c \
 	    $(REALCONS_DIR)realcons_console_pdp11_40.c \
+	    $(REALCONS_DIR)realcons_console_pdp11_44.c \
 	    $(REALCONS_DIR)realcons_console_pdp11_70.c
 
 REALCONS_PDP10= \
