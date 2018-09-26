@@ -17,6 +17,7 @@ CC_DBG_FLAGS = -O2 -Wno-unused-result
 else
 CC_DBG_FLAGS = -ggdb3 -O0
 endif
+TEST = test
 
 # REALCONS: default for all targets is -UUSE_REALCONS, REALCONS_OPT override for PDP11
 ifeq ($(USE_REALCONS),1)
@@ -161,8 +162,38 @@ ifneq ($(WIN32),)
     NETWORK_OPT = -DUSE_NETWORK -lwpcap -lpacket
   endif
   BIN=$(SRC)/../bin-win32/
+else
+  #*nix Environments (&& cygwin)
+  ifeq (git-repo,$(shell if $(TEST) -d ../../../../.git; then echo git-repo; fi))
+    GIT_PATH=$(strip $(shell which git))
+    ifeq (,$(GIT_PATH))
+      $(error building using a git repository, but git is not available)
+    endif
+    ifeq (commit-id-exists,$(shell if $(TEST) -e .git-commit-id; then echo commit-id-exists; fi))
+      CURRENT_GIT_COMMIT_ID=$(strip $(shell grep 'SIM_GIT_COMMIT_ID' .git-commit-id | awk '{ print $$2 }'))
+      ACTUAL_GIT_COMMIT_ID=$(strip $(shell git log -1 --pretty="%H"))
+      ifneq ($(CURRENT_GIT_COMMIT_ID),$(ACTUAL_GIT_COMMIT_ID))
+        NEED_COMMIT_ID = need-commit-id
+      endif
+    else
+      NEED_COMMIT_ID = need-commit-id
+    endif
+    ifeq (need-commit-id,$(NEED_COMMIT_ID))
+      isodate=$(shell git log -1 --pretty="%ai"|sed -e 's/ /T/'|sed -e 's/ //')
+      $(shell git log -1 --pretty="SIM_GIT_COMMIT_ID %H%nSIM_GIT_COMMIT_TIME $(isodate)" >.git-commit-id)
+    endif
+  endif
 endif
-
+ifeq (commit-id-exists,$(shell if $(TEST) -e .git-commit-id; then echo commit-id-exists; fi))
+  GIT_COMMIT_ID=$(shell grep 'SIM_GIT_COMMIT_ID' .git-commit-id | awk '{ print $$2 }')
+  GIT_COMMIT_TIME=$(shell grep 'SIM_GIT_COMMIT_TIME' .git-commit-id | awk '{ print $$2 }')
+endif
+ifneq (,$(GIT_COMMIT_ID))
+  OS_CCDEFS += -DSIM_GIT_COMMIT_ID=$(GIT_COMMIT_ID)
+endif
+ifneq (,$(GIT_COMMIT_TIME))
+  OS_CCDEFS += -DSIM_GIT_COMMIT_TIME=$(GIT_COMMIT_TIME)
+endif
 
 # MKDIRBIN cmd used by SimH 4.x rules
 #ifneq (binexists,$(shell if $(TEST) -e $(BIN); then echo binexists; fi))
