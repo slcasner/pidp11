@@ -125,6 +125,7 @@ typedef struct realcons_console_controller_interface_struct
 #ifdef VM_PDP11
 #include "realcons_console_pdp11_20.h"
 #include "realcons_console_pdp11_40.h"
+#include "realcons_console_pdp11_44.h"
 #include "realcons_console_pdp11_70.h"
 #endif
 #ifdef VM_PDP10
@@ -165,6 +166,7 @@ typedef struct realcons_struct
 	union
 	{
 		realcons_console_logic_pdp11_40_t pdp11_40;
+		realcons_console_logic_pdp11_44_t pdp11_44;
 		realcons_console_logic_pdp11_70_t pdp11_70;
 	} console_state_pdp11;
 #endif

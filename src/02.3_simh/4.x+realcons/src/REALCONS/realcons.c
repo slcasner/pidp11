@@ -248,6 +248,15 @@ t_stat realcons_connect(realcons_t *_this, char *consolelogic_name, char *server
 				&(_this->console_controller_interface), consolelogic_name);
 			_this->console_controller = console_logic;
 		}
+		else if (!strcmp(consolelogic_name, "11/44")) {
+			realcons_console_logic_pdp11_44_t *console_logic;
+			// 1. create
+			console_logic = realcons_console_pdp11_44_constructor(_this);
+			// 2. connect
+			realcons_console_pdp11_44_interface_connect(console_logic,
+				&(_this->console_controller_interface), consolelogic_name);
+			_this->console_controller = console_logic;
+		}
 		else if (!strcmp(consolelogic_name, "11/70")) {
 			realcons_console_logic_pdp11_70_t *console_logic;
 			// 1. create
