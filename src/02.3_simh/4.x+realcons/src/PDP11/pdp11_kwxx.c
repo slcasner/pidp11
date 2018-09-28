@@ -98,7 +98,7 @@ uint32 kwxx_interval_lsb = 0;                   /* interval counter LSBs */
 uint32 kwxx_measure = 0;                        /* measurement counter */
 int kwxx_uptime_latched = 0;                    /* nonzero => uptime latched */
 
-double kwxx_uptime_base = 0.0;                  /* sim uptime when reset */
+double kwxx_uptime_base = 0.0;                  /* sim uptime at reset, read */
 double kwxx_measure_base = 0.0;                 /* sim uptime when cleared */
 t_uint64 kwxx_uptime = 0;                       /* latched uptime value */
 t_uint64 kwxx_interval = 0;                     /* latched uptime value */
@@ -176,11 +176,12 @@ switch ((PA >> 1) & 07) {
 	if (!kwxx_uptime_latched) {
 	    double gtime = sim_gtime();
 	    double ips = sim_timer_inst_per_sec();
-	    kwxx_uptime = (gtime - kwxx_uptime_base) / ips * 25000.;
+	    kwxx_uptime += (gtime - kwxx_uptime_base) / ips * 25000.;
 	    kwxx_uptime_msb = (kwxx_uptime >> 32) & BMASK;
 	    kwxx_uptime_mid = (kwxx_uptime >> 16) & DMASK;
 	    kwxx_uptime_lsb = kwxx_uptime & DMASK;
 	    kwxx_uptime_latched = 1;                    /* latch count */
+	    kwxx_uptime_base = gtime;
 	    /* KW11-XX does not depend on any register read/write to clear */
 	    /* the interupt, it just happens on the bus grant signal, but */
 	    /* the interrupt routine reads the uptime. */
@@ -233,6 +234,7 @@ switch ((PA >> 1) & 07) {
 
     case 01:                                            /* uptime MSBs */
 	kwxx_uptime_base = sim_gtime();                 /* clear counter */
+	kwxx_uptime = 0;
 	break;
 
     case 02:                                            /* uptime mid */
