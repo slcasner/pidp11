@@ -8492,7 +8492,8 @@ static void inject_char_to_stdin(char ch) {
 #else // Linux?
 	//int	fd = fopen("/dev/tty", "rw") ;
 	//ioctl(fd,  TIOCSTI, &ch) ;
-	ioctl(0,  TIOCSTI, &ch) ; // does not echo
+	if (ioctl(0,  TIOCSTI, &ch) < 0)  // does not echo
+	    fprintf(stderr, "ioctl(TIOCSTI) failed: %s\r\n", strerror(errno));
 #endif
 }
 
