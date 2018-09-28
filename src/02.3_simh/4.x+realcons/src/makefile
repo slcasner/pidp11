@@ -88,7 +88,7 @@ ifneq (,$(filter $(MAKE_TARGET_ARCH),X86 X64))
     OS_CCDEFS = -lm -lsocket -lnsl -lrt -lpthread -D_GNU_SOURCE
   else
     ifneq (,$(findstring darwin,$(OSTYPE)))
-      OS_CCDEFS = -D_GNU_SOURCE
+      OS_CCDEFS = -D_GNU_SOURCE -Wno-comment
     else
       OS_CCDEFS = -D_GNU_SOURCE
       LDFLAGS= -lrt -lm -lpthread -ldl

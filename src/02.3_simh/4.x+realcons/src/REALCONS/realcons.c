@@ -136,7 +136,7 @@ void realcons_init(realcons_t *_this)
 	int i;
 
 	// clear all data, including the interface
-	memset(_this, 0, sizeof(_this));
+	memset(_this, 0, sizeof(*_this));
 
 	strcpy(_this->application_server_hostname, "localhost");
 	_this->console_logic_name[0] = '\0';
@@ -636,7 +636,7 @@ char *realcons_simh_get_cmd(realcons_t *_this)
 		// rp now on first char after \n
 		wp = _this->simh_cmd_buffer;
 		// shift folowing lines to start of bufer (if any)
-		while (*wp++ = *rp++)
+		while ((*wp++ = *rp++))
 			;
 	}
 	return buffer;
@@ -658,7 +658,7 @@ char realcons_simh_getc_cmd(realcons_t *_this)
 	// shift buffer content
 	wp = _this->simh_cmd_buffer;
 	rp = wp + 1;
-	while (*wp++ = *rp++) ;
+	while ((*wp++ = *rp++)) ;
 	return result ;
 }
 

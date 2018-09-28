@@ -210,7 +210,7 @@ blinkenlight_api_status_t blinkenlight_api_client_get_controls(blinkenlight_api_
 			assert(c->index == i_control);
 			// server lists == client lists
 			strcpy(c->name, result_control->control.name);
-			c->type = result_control->control.type;
+			c->type = (blinkenlight_control_type_t)result_control->control.type;
 			c->is_input = result_control->control.is_input;
 			c->radix = result_control->control.radix;
 			c->value_bitlen = result_control->control.value_bitlen;

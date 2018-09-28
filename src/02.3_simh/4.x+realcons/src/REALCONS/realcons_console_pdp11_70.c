@@ -561,13 +561,13 @@ void realcons_console_pdp11_70_interface_connect(realcons_console_logic_pdp11_70
         _this->cpusignal_instruction_register = &realcons_IR;
         _this->cpusignal_PSW = &realcons_PSW;
         _this->cpusignal_bus_ID_mode = &realcons_bus_ID_mode;
-        _this->cpusignal_cpu_mode = &cm; // MD_SUP,MD_
+        _this->cpusignal_cpu_mode = (t_value*)&cm; // MD_SUP,MD_
         _this->cpusignal_MMR0 = &MMR0; // MMU register 17 777 572
         _this->cpusignal_MMR3 = &MMR3; // MMU register 17 772 516
-        _this->cpusignal_R0 = &(R[0]); // R: global of pdp11_cpu.c. "Working Register Set"!
+        _this->cpusignal_R0 = (t_value*)&(R[0]); // R: global of pdp11_cpu.c. "Working Register Set"!
         _this->cpusignal_PC = &saved_PC; // R[7] not valid in console mode
-        _this->cpusignal_switch_register = &SR; // see pdp11_cpumod.SR_rd()
-        _this->cpusignal_display_register = &DR;
+        _this->cpusignal_switch_register = (t_value*)&SR; // see pdp11_cpumod.SR_rd()
+        _this->cpusignal_display_register = (t_value*)&DR;
     }
 
     /*** link handler to cpu/device events ***/

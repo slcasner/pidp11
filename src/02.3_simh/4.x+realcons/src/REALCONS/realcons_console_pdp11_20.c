@@ -415,9 +415,9 @@ void realcons_console_pdp11_20_interface_connect(realcons_console_logic_pdp11_20
         // oder gleich "&(_switch_HALT->value)?"
         _this->cpusignal_instruction_register = &realcons_IR;
         _this->cpusignal_PSW = &realcons_PSW;
-        _this->cpusignal_R0 = &(R[0]); // R: global of pdp11_cpu.c
+        _this->cpusignal_R0 = (t_value*)&(R[0]); // R: global of pdp11_cpu.c
         _this->cpusignal_PC = &saved_PC; // R[7] not valid in console mode
-        _this->cpusignal_switch_register = &SR; // see pdp11_cpumod.SR_rd()
+        _this->cpusignal_switch_register = (t_value*)&SR; // see pdp11_cpumod.SR_rd()
     }
 
     /*** link handler to cpu/device events ***/
