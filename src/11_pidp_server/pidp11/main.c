@@ -208,7 +208,7 @@ static void on_blinkenlight_api_panel_get_controlvalues(blinkenlight_panel_t *p)
                 // mount switch value from register bit fields
                 unsigned i_register_wiring;
                 blinkenlight_control_blinkenbus_register_wiring_t *bbrw;
-                c->value = 0;
+                uint64_t value = 0;
                 for (i_register_wiring = 0; i_register_wiring < c->blinkenbus_register_wiring_count;
                         i_register_wiring++) {
                     uint32_t regvalbits; // value of current register
@@ -221,8 +221,9 @@ static void on_blinkenlight_api_panel_get_controlvalues(blinkenlight_panel_t *p)
                     regvalbits &= bbrw->blinkenbus_bitmask; // bits of value, unshiftet
                     regvalbits >>= bbrw->blinkenbus_lsb;
                     // OR in the bits of current register
-                    c->value |= (uint64_t) regvalbits << bbrw->control_value_bit_offset;
+                    value |= (uint64_t) regvalbits << bbrw->control_value_bit_offset;
                 }
+                c->value = value;
                 if (c->mirrored_bit_order)
                     c->value = mirror_bits(c->value, c->value_bitlen);
                 // individual fixup/logic
