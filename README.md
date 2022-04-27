@@ -73,7 +73,7 @@ in a subdirectory in case you mess up a disk image and want to start afresh.
 In case you're not too familiar with Raspbian/Linux:
 First make sure you've got a working internet connection (googling will help you quickly). Then:
 * cd ~
-* git clone git://github.com/PiDP/pidp11.git    // not git clone https://github.com/PiDP/PiDP-11
+* git clone git@github.com:slcasner/pidp11.git
 * sudo mkdir /opt/pidp11
 * cd ~/pidp11                                    // note - this is the downloaded copy in your home directory...
 * sudo cp -r * /opt/pidp11/                      // copy to the /opt/pidp11 directory
